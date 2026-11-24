@@ -1,0 +1,8 @@
+[Unit]
+Description=Back up the FoxLab bot database
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/foxbot
+ExecStart=%h/foxbot/.venv/bin/python scripts/backup_db.py
+UMask=0077

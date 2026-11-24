@@ -1,0 +1,18 @@
+# systemd user service. Install on the host with:
+#   mkdir -p ~/.config/systemd/user && cp deploy/foxbot.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload && systemctl --user enable --now foxbot
+#   loginctl enable-linger "$USER"     # keeps it running after logout and starts it on boot
+[Unit]
+Description=FoxLab scheduling bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=%h/foxbot
+ExecStart=%h/foxbot/.venv/bin/python -m foxbot run
+Restart=always
+RestartSec=15
+UMask=0077
+
+[Install]
+WantedBy=default.target
